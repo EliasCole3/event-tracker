@@ -12,6 +12,7 @@ import { Modal } from './components/bs-modal-wrapper'
 import { clone } from './toolbox/clone'
 import { savefile } from './toolbox/savefile'
 import { loadfile } from './toolbox/loadfile'
+import { dataTypeOf } from './toolbox/data-type-of'
 
 // Data
 import { data as testdata1 } from './sample-data/data1.js'
@@ -175,7 +176,70 @@ class App extends Component {
     this.setState({ activeTab: index }, this.updateLocalStorage)
   }
 
+  createNewFullObject = params => {
+    let newEntry = {
+      id: params.id,
+      sortOrder: params.id,
+      created: moment().format('x'),
+      updated: moment().format('x')
+    }
+
+    for(let prop in params.formData) {
+      // todo: make this optional?
+      if(dataTypeOf(params.formData[prop]) === 'array') {
+        let values = []
+        params.formData[prop].forEach((x, i) => {
+          values.push(this.createNewFullObject({ id: i + 1, formData: x }))
+        })
+        newEntry[prop] = values
+      } else {
+        newEntry[prop] = params.formData[prop]
+      }
+    }
+
+    return newEntry
+  }
+
   getEntriesTable = () => {
+    let modelSchema = {
+      title: 'Entry',
+      type: 'object',
+      required: ['name', 'inGameTime'],
+      properties: {
+        name: { type: 'string', title: 'Name' },
+        type: { type: 'string', title: 'Type' },
+        inGameTime: { type: 'string', title: 'In Game Time' },
+        notes: { type: 'string', title: 'Notes' }
+      }
+    }
+
+    let uiSchema = {
+      'ui:rootFieldId': 'entry',
+      'ui:order': [
+        'name',
+        'type',
+        'inGameTime',
+        'notes'
+      ],
+      name: {
+        'ui:autofocus': true
+      },
+      inGameTime: {
+        'ui:widget': (props) => {
+          return (
+            <DateTimeField onChange={value => { props.onChange(value) }} />
+          )
+        }
+      },
+      notes: {
+        'ui:widget': 'textarea',
+        'ui:options': {
+          rows: 7
+        }
+      }
+    }
+
+
     if(this.state.data.length !== 0) {
       return (
         <Table
@@ -208,42 +272,8 @@ class App extends Component {
           }}
           showSingleView={this.showSingleView}
           rowSelectorClicked={this.rowSelectorClicked}
-          modelSchema={{
-            title: 'Entry',
-            type: 'object',
-            required: ['name', 'inGameTime'],
-            properties: {
-              name: { type: 'string', title: 'Name' },
-              type: { type: 'string', title: 'Type' },
-              inGameTime: { type: 'string', title: 'In Game Time' },
-              notes: { type: 'string', title: 'Notes' }
-            }
-          }}
-          uiSchema={{
-            'ui:rootFieldId': 'entry',
-            'ui:order': [
-              'name',
-              'type',
-              'inGameTime',
-              'notes'
-            ],
-            name: {
-              'ui:autofocus': true
-            },
-            inGameTime: {
-              'ui:widget': (props) => {
-                return (
-                  <DateTimeField onChange={value => { props.onChange(value) }} />
-                )
-              }
-            },
-            notes: {
-              'ui:widget': 'textarea',
-              'ui:options': {
-                rows: 7
-              }
-            }
-          }}
+          modelSchema={modelSchema}
+          uiSchema={uiSchema}
           columnOrder={[
             'id',
             'name',
@@ -258,7 +288,25 @@ class App extends Component {
       )
     } else {
       return (
-        <h2>There is no data currently. Please click the '+' button to create an entry :)</h2>
+        <div id='new-entry-form-wrapper'>
+          <Form
+            schema={modelSchema}
+            uiSchema={uiSchema}
+            onChange={() => { }}
+            onSubmit={e => {
+              let state = clone(this.state)
+              let newEntry = this.createNewFullObject({ id: 1, formData: e.formData })
+              state.data.push(newEntry)
+              this.setState(state, () => {
+                this.updateLocalStorage()
+              })
+            }}
+            onError={errors => {
+              console.log('errors')
+              console.log(errors)
+            }}
+          />
+        </div>
       )
     }
   }
@@ -312,16 +360,7 @@ class App extends Component {
           <Tabs.Panel title='Table'>
             {this.getEntriesTable()}
             {this.getStateBox()}
-            {this.getSaveButton()}
-            {this.getLoadButton()}
           </Tabs.Panel>
-
-          {/*<Tabs.Panel title='New'>
-            <CreateEntryForm
-              addNewEntryToData={this.addNewEntryToData}
-              getNewId={this.getNewId}
-            />
-          </Tabs.Panel>*/}
 
           <Tabs.Panel title='Single'>
             <div id='single-view-wrapper'>
@@ -329,6 +368,14 @@ class App extends Component {
                 {JSON.stringify(this.state.singleViewEntry, null, 2)}
               </pre>
             </div>
+          </Tabs.Panel>
+
+          <Tabs.Panel title='State Controls'>
+            <br />
+            {this.getSaveButton()}
+            <br />
+            <br />
+            {this.getLoadButton()}
           </Tabs.Panel>
 
         </Tabs>

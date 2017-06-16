@@ -116,3 +116,7 @@ td {
 .create-button {
   margin-right: 15px;
 }
+
+#new-entry-form-wrapper {
+  width: 50%;
+}
