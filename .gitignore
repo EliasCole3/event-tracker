@@ -1,0 +1,16 @@
+node_modules/
+.DS_Store
+dist/
+ignored/
+npm-debug.log
+**/*.sublime-workspace
+**/*.sublime-project
+**/*.mp4
+**/*.mpg
+**/*.mov
+**/*.mpeg
+**/*.zip
+**/*.ts
+**/*.idea
+**/*.iml
+**/*.jar
