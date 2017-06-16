@@ -355,6 +355,7 @@ class App extends Component {
         onClick={e => {
           loadfile(data => {
             let newState = JSON.parse(data)
+            newState.activeTab = 1
             this.setState(newState, this.updateLocalStorage)
           })
         }}
