@@ -1,0 +1,118 @@
+
+/*
+  Bootstrap overrides
+*/
+.glyphicon {
+  top: -1px !important;
+}
+
+.App {
+  /*text-align: center;*/
+  /*width: 50%;*/
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+#table {
+  width: 70%;
+  float: left;
+}
+
+#state-box-wrapper {
+  width: 30%;
+  float: right;
+}
+
+#state-box {
+  width: 100%;
+  height: 500px;
+}
+
+.my-form-control {
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  margin-bottom: 15px;
+}
+
+textarea.my-form-control {
+  height: 60px;
+  width: 350px;
+}
+
+.my-label {
+  padding-right: 5px;
+  font-size: larger;
+}
+
+td {
+  text-align: left;
+}
+
+/*.textarea-label {
+  padding-right: 5px;
+  font-size: larger;
+  height: 60px;
+  vertical-align: top;
+}*/
+
+
+.column-header {
+  background-color: aliceblue;
+}
+
+/*.column-header:active {
+  background-color: #e3f1fd;
+}*/
+
+.column-header-sorted {
+  background-color: #e3f1fd;
+}
+
+.row-selector-checkbox {
+  transform: scale(2);
+}
+
+#reload-state-from-local-storage-button {
+  /*display: none;*/
+  background: transparent;
+  border: none !important;
+  font-size:0;
+}
+
+#reload-state-from-local-storage-input {
+  background: transparent;
+  border: none !important;
+  font-size:0;
+}
+
+.create-button {
+  margin-right: 15px;
+}
