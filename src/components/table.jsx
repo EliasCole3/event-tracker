@@ -287,7 +287,7 @@ class Table extends React.Component {
             }
           }}
         >
-          {x}
+          {this.props.columnHeaderMap[x]}
         </th>
       )
     })
@@ -316,6 +316,7 @@ class Table extends React.Component {
           enabledFeatures={this.props.enabledFeatures}
           updateTableSettingsOrData={this.props.updateTableSettingsOrData}
           columnOrder={this.props.columnOrder ? this.props.columnOrder : this.state.columnOrder}
+          propertiesWithCustomDatetimeFormatters={this.props.propertiesWithCustomDatetimeFormatters}
         />
       )
     })
@@ -449,14 +450,20 @@ class Row extends React.Component {
     }
 
     this.props.columnOrder.forEach(x => {
+      let value
+      let customFormatString = this.props.propertiesWithCustomDatetimeFormatters[x]
+
       if(x === 'created' || x === 'updated') {
         // let value = moment(this.props.entry[prop], 'x').format('MM.DD.YY h:mm:ss a')
         // let value = moment(this.props.entry[prop], 'x').format('MM.DD.YY')
-        let value = moment(this.props.entry[x], 'x').format('MM/DD/YY HH:mm:ss')
-        cells.push(<Cell value={value} key={x} />)
+        value = moment(this.props.entry[x], 'x').format('MM/DD/YY HH:mm:ss')
+      } else if(customFormatString) {
+        value = moment(this.props.entry[x], 'x').format(customFormatString)
       } else {
-        cells.push(<Cell value={this.props.entry[x]} key={x} />)
+        value = this.props.entry[x]
       }
+      
+      cells.push(<Cell value={value} key={x} />)
     })
 
 

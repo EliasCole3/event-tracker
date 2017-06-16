@@ -271,7 +271,6 @@ class App extends Component {
             })
           }}
           showSingleView={this.showSingleView}
-          rowSelectorClicked={this.rowSelectorClicked}
           modelSchema={modelSchema}
           uiSchema={uiSchema}
           columnOrder={[
@@ -283,6 +282,18 @@ class App extends Component {
             'created',
             'updated'
           ]}
+          columnHeaderMap={{
+            id: 'ID',
+            name: 'Name',
+            type: 'Type',
+            inGameTime: 'In-Game Time',
+            notes: 'Notes',
+            created: 'Created',
+            updated: 'Updated'
+          }}
+          propertiesWithCustomDatetimeFormatters={{
+            inGameTime: 'MM/DD/YY HH:mm:ss'
+          }}
 
         />
       )
