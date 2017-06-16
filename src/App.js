@@ -35,8 +35,9 @@ class App extends Component {
     let localStorageState = JSON.parse(localStorage.getItem('event-tracker-data'))
     let state
     if(localStorageState === null || localStorageState.data.length === 0) {
-      console.log(`failed to retrieve data from local storage, loading data from test file`)
+      console.log(`failed to retrieve data from local storage, loading static data`)
       state = testdata1
+      // state = {}
       localStorage.setItem('event-tracker-last-id', '3')
       localStorage.setItem('event-tracker-data', JSON.stringify(state))
     } else {
@@ -103,6 +104,14 @@ class App extends Component {
       activeTab: 2,
       singleViewEntry: entryToShow
     }, this.updateLocalStorage)
+  }
+
+  getSingleView = () => {
+    if(this.state.singleViewEntry) {
+      return JSON.stringify(this.state.singleViewEntry, null, 2)
+    } else {
+      return 'Click one of the row\'s eye buttons :)'
+    }
   }
 
   showEventsView = id => {
@@ -373,13 +382,13 @@ class App extends Component {
 
           <Tabs.Panel title='Table'>
             {this.getEntriesTable()}
-            {this.getStateBox()}
+            {/*{this.getStateBox()}*/}
           </Tabs.Panel>
 
           <Tabs.Panel title='Single'>
             <div id='single-view-wrapper'>
               <pre>
-                {JSON.stringify(this.state.singleViewEntry, null, 2)}
+                {this.getSingleView()}
               </pre>
             </div>
           </Tabs.Panel>

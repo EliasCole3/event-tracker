@@ -2,6 +2,7 @@
   "name": "event-tracker",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://eliascole.com/event-tracker",
   "dependencies": {
     "babel-core": "^6.24.1",
     "babel-plugin-syntax-class-properties": "^6.13.0",
@@ -20,7 +21,8 @@
     "redux": "^3.6.0"
   },
   "devDependencies": {
-    "react-scripts": "0.9.5"
+    "react-scripts": "0.9.5",
+    "serve": "^5.2.2"
   },
   "scripts": {
     "start": "react-scripts start",

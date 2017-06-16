@@ -1,6 +1,7 @@
 node_modules/
 .DS_Store
 dist/
+build/
 ignored/
 npm-debug.log
 **/*.sublime-workspace
