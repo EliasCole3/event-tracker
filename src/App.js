@@ -20,6 +20,7 @@ import { data as testdata1 } from './sample-data/data1.js'
 // CSS
 import './styles/App.css'
 import './styles/react-simpletabs.css'
+import './styles/bootstrap-datetimepicker.min.css'
 
 
 
@@ -202,7 +203,6 @@ class App extends Component {
 
   getEntriesTable = () => {
     let modelSchema = {
-      title: 'Entry',
       type: 'object',
       required: ['name', 'inGameTime'],
       properties: {
@@ -227,7 +227,10 @@ class App extends Component {
       inGameTime: {
         'ui:widget': (props) => {
           return (
-            <DateTimeField onChange={value => { props.onChange(value) }} />
+            <DateTimeField 
+              onChange={value => { props.onChange(value) }}
+              defaultText={''}
+            />
           )
         }
       },

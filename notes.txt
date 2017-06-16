@@ -1,5 +1,3 @@
 todo
 -------------------------
-Fix the table for no rows, so one can be created
-polish datetime picker
-table datetime formatting(inGameTime)
+replace test file pull with a default state object
